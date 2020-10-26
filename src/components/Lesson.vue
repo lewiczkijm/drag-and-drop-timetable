@@ -14,8 +14,10 @@
 <script>
     const step = 57.75;
     export default {
+        // Тестовые данные. Впоследствии заменить на полученные из store
         name: "Lesson",
         data:()=>({
+            // Время начала и окончания урока - в будушем computed
             start:"10:30",
             end:"11:30",
             group:{
@@ -24,14 +26,21 @@
                 color:"#FFEECE",
                 color2:"#FFBC42"
             },
+            /* В будущем рассчетный параметр. Задает высоту элемента,
+            *  по логике - продолжительность урока
+            * */
             height:0
         }),
         methods:{
+
+            // Масштабирование карточки урока
             startResize(){
                 let startY = 0;
                 let baseY = 0;
                 let self = this;
                 const height = this.height;
+
+                // Рассчет размера, в зависимости от положения мыши
                 function move(e){
                     if(startY === 0)
                         baseY = e.clientY;
@@ -39,7 +48,7 @@
                         let move = (baseY - e.clientY) * -1;
                         if(move > 0){
                             move = Math.ceil(move/step) * step + step;
-                            self.height =move
+                            self.height = move
                         }
                         else {
                             move = Math.ceil((height + move)/step)*step;
@@ -51,10 +60,14 @@
                     }
                     startY = e.clientY
                 }
+
+                // Отписка от событий и остановка перемещения
                 function stop(){
                     window.removeEventListener("mousemove",move);
                     window.removeEventListener("mouseup",stop);
                 }
+
+                // Подписка на события window для того, чтобы события мыши улавливались по всему экрану
                 window.addEventListener("mousemove",move);
                 window.addEventListener("mouseup",stop)
             },
