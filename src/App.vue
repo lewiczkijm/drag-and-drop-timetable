@@ -1,16 +1,20 @@
 <template>
   <div id="app">
+    {{test}}
     <Lesson/>
   </div>
 </template>
 
 <script>
-
+import {mapState} from 'vuex'
 import Lesson from "./components/Lesson";
 export default {
   name: 'App',
   components: {
     Lesson
+  },
+  computed:{
+    ...mapState({test:state=>state.timetable.test})
   }
 }
 </script>
