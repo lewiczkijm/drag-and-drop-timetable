@@ -1,5 +1,6 @@
 # dragndrop
-
+Календарь - расписание занятий с функцей drag end drop.
+Это тестовое задание [описание смотреть здесь](https://www.notion.so/Frontend-GermanLanguage-ph-e6b4e091f7454281ad1ea3a23247ab1d) 
 ## Project setup
 ```
 npm install
