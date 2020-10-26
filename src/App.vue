@@ -1,13 +1,16 @@
 <template>
   <div id="app">
+    <Lesson/>
   </div>
 </template>
 
 <script>
 
+import Lesson from "./components/Lesson";
 export default {
   name: 'App',
   components: {
+    Lesson
   }
 }
 </script>
