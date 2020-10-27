@@ -27,7 +27,7 @@ test('CREATE_TIMETABLE - Empty field with dates', () => {
 
     timetable.mutations.CREATE_TIMETABLE(state);
     expect(state.timetable.length).toBe(7);
-    expect(state.timetable[0].date).toBe(18);
+    expect(state.timetable[0].date).toBe(19);
 });
 
 test('CREATE_TIMETABLE - right lessons location', () => {
@@ -50,12 +50,12 @@ test('CREATE_TIMETABLE - right lessons location', () => {
 
 
     timetable.mutations.CREATE_TIMETABLE(state);
-    expect(state.timetable[2].time[6].lesson).toBe(undefined);
-    expect(state.timetable[2].time[7].lesson.id).toBe(24589);
-    expect(state.timetable[2].time[8].lesson.id).toBe(24589);
-    expect(state.timetable[2].time[9].lesson).toBe(undefined);
+    expect(state.timetable[1].time[8].lesson).toBe(undefined);
+    expect(state.timetable[1].time[9].lesson.id).toBe(24589);
+    expect(state.timetable[1].time[10].lesson.id).toBe(24589);
+    expect(state.timetable[1].time[11].lesson).toBe(undefined);
 
-    expect(state.timetable[3].time[8].lesson).toBe(undefined);
+    expect(state.timetable[2].time[8].lesson).toBe(undefined);
 
 });
 
@@ -79,8 +79,8 @@ test('CREATE_TIMETABLE - flags isStart on start lesson', () => {
 
 
     timetable.mutations.CREATE_TIMETABLE(state);
-    expect(state.timetable[2].time[7].isStart).toBe(true);
-    expect(state.timetable[2].time[8].isStart).toBe(false);
+    expect(state.timetable[1].time[9].isStart).toBe(true);
+    expect(state.timetable[1].time[10].isStart).toBe(false);
 
 });
 
