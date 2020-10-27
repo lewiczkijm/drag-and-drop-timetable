@@ -55,8 +55,6 @@ const state = ()=>({
 
 const mutations = {
     CREATE_TIMETABLE(state){
-        // Получить полный список дат вместе с неиспользуемыми
-        let dates = [];
 
 
         /**
@@ -71,55 +69,38 @@ const mutations = {
 
             const incrementActiveDate = ()=>activeDate = new Date(activeDate.getTime() + 86400000);
 
-            console.log(activeDate);
 
-            let EmptyTime = {time: 6, lesson: undefined};
-            let EmptyDay = {
-                date: 11,
-                time: []
-            };
-
-            for (let i = 6; i <= 16; i += 0.5) {
-                EmptyTime.time = i;
-                EmptyDay.time.push({...EmptyTime})
-            }
             for (let i=0;i < 7;i ++){
-                state.timetable.push({...EmptyDay,date:activeDate.getDate()});
+                const dayTT=[];
+                for (let j = 6; j <= 16; j += 0.5) {
+                    dayTT.push({time: j, lesson: undefined})
+                }
+                state.timetable.push({time:[...dayTT],date:activeDate.getDate()});
                 incrementActiveDate();
             }
         }
         createEmptyWeek(state.lessons[0].date);
 
+        // Список уроков
         state.lessons.forEach(el=>{
-            const day = new Date(el.date);
+            const day = new Date(el.date).getDate();
+            const currentDayObject = state.timetable.find(e=>e.date === day);
 
-            // Первый день
-            if(!dates[dates.length - 1]) {
-                dates.push(day);
-                return;
-            }
+            let firstFlag = true;
+            let time = el.start;
 
-            // сдедующий день без перерыва
-            if(
-                dates[dates.length - 1].getTime() < day.getTime() &&
-                dates[dates.length - 1].getTime() + 86400000  > day.getTime() ){
-                dates.push(day);
-                return;
-            }
-
-            // Вставка уроков в открытую дату
-            console.log();
-
-            // Обработка разрыва
-            while (dates[dates.length - 1].getTime() < day.getTime()){
-                const t = new Date(dates[dates.length - 1].getTime() + 86400000);
-                dates.push(t);
+            // Проход по часам для вставки урока в нужное место
+            for(let i = 0;i < 20; i ++){
+                if(currentDayObject.time[i].time === time && time < el.end){
+                    currentDayObject.time[i].lesson = el;
+                    currentDayObject.time[i].isStart = firstFlag;
+                    firstFlag = false;
+                    time +=0.5
+                }
             }
         });
 
 
-        // диагностика дат - отладка
-        state.dates = dates
     },
     // Это проверочная мутация для тестов - не запускать
     TEST_M(state){
