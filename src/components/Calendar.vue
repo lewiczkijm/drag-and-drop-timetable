@@ -2,10 +2,12 @@
     <div class="container">
     <div class="days">
 
-        <div v-for="day in days" :key="day" class="day">{{day}},11</div>
+        <div v-for="day in days" :key="day" class="day">{{day}}, 11</div>
 
     </div>
-    <div class="hours">g</div>
+    <div class="hours">
+        <div class="hour" :key="hour" v-for="hour in time" >{{hour}}</div>
+    </div>
     <div class="area"><div></div></div>
     </div>
 </template>
@@ -13,9 +15,14 @@
 <script>
     export default {
         name: "Calendar",
-        data:()=>({
-            days:["Mon","Tue","Wed","Thu","Fri","Sat","Sun"]
-        })
+        data:function(){
+            let time = [];
+            for (let i = 6;i < 17;i ++) time.push(`${i}:00`);
+            return {
+                days:["Mon","Tue","Wed","Thu","Fri","Sat","Sun"],
+                time:time
+            }
+        }
     }
 </script>
 
@@ -45,9 +52,15 @@
 
 .hours{
     display: grid;
-    grid-template-rows: repeat(24, 30px);
+    grid-template-rows: repeat(12, 60px);
     grid-row-start: 2;
     grid-row-end: 26;
+    grid-gap: 0;
+}
+.hour{
+    padding-top: 3.1em;
+    padding-right: 8px;
+    text-align: right;
 }
 .area{
     display: grid;
