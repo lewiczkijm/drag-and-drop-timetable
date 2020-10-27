@@ -62,7 +62,7 @@ const mutations = {
          * @param startDate строка даты из входа в формате YYYY-MM-DD
          * @param startDay Начало недели - 0 воскресенье, 1 - понедельник ...
          */
-        function createEmptyWeek(startDate,startDay=0) {
+        function createEmptyWeek(startDate,startDay=1) {
             const d = new Date(startDate);
             const START_DATE = d.getDay() - startDay;
             let activeDate = new Date(d.getTime() - 86400000 * START_DATE);
@@ -72,7 +72,7 @@ const mutations = {
 
             for (let i=0;i < 7;i ++){
                 const dayTT=[];
-                for (let j = 6; j <= 16; j += 0.5) {
+                for (let j = 5; j <= 17; j += 0.5) {
                     dayTT.push({time: j, lesson: undefined})
                 }
                 state.timetable.push({time:[...dayTT],date:activeDate.getDate()});
