@@ -50,6 +50,10 @@ const state = ()=>({
 
     ],
     dates:[],
+    weekNames:[
+        "Mon","Tue","Wed","Thu","Fri","Sat","Sun"
+    ],
+
     test:"test"
 });
 
@@ -65,7 +69,12 @@ const mutations = {
         function createEmptyWeek(startDate,startDay=1) {
             const d = new Date(startDate);
             const START_DATE = d.getDay() - startDay;
-            let activeDate = new Date(d.getTime() - 86400000 * START_DATE);
+            let activeDate = new Date(d.getTime() - 86400000 * START_DATE);     // нахождение первого дня недели
+
+            // Получение списка дней недели с датами
+            for(let i = 0;i < 7;i ++){
+                state.dates.push(state.weekNames[i] + ", " + (activeDate.getDate() + i))
+            }
 
             const incrementActiveDate = ()=>activeDate = new Date(activeDate.getTime() + 86400000);
 
