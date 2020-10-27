@@ -2,7 +2,7 @@
     <div class="container">
     <div class="days">
 
-        <div v-for="day in days" :key="day" class="day">{{day}}, 11</div>
+        <div v-for="day in dates" :key="day" class="day">{{day}}</div>
 
     </div>
     <div class="hours">
@@ -25,7 +25,10 @@
             }
         },
         computed:{
-            ...mapState({lessons:state=>state.timetable.lessons})
+            ...mapState({
+                lessons:state=>state.timetable.lessons,
+                dates:state=>state.timetable.dates
+            })
         }
     }
 </script>
