@@ -1,6 +1,7 @@
 <template>
   <div id="app">
-    {{test}}
+
+    <Calendar/>
     <Lesson/>
   </div>
 </template>
@@ -8,9 +9,11 @@
 <script>
 import {mapState} from 'vuex'
 import Lesson from "./components/Lesson";
+import Calendar from "./components/Calendar";
 export default {
   name: 'App',
   components: {
+    Calendar,
     Lesson
   },
   // Инициализация подготовки данных в store.
@@ -26,10 +29,10 @@ export default {
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Rubik', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
+  background: #E5E5E5;
   color: #2c3e50;
   margin-top: 60px;
 }
