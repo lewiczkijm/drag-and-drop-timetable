@@ -13,6 +13,7 @@
 </template>
 
 <script>
+    import {mapState} from "vuex"
     export default {
         name: "Calendar",
         data:function(){
@@ -22,6 +23,9 @@
                 days:["Mon","Tue","Wed","Thu","Fri","Sat","Sun"],
                 time:time
             }
+        },
+        computed:{
+            ...mapState({lessons:state=>state.timetable.lessons})
         }
     }
 </script>
