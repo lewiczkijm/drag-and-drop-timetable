@@ -13,6 +13,11 @@ export default {
   components: {
     Lesson
   },
+  // Инициализация подготовки данных в store.
+  // Должна происходить на ранней стадии загрузки, но не в корне, а в компоненте
+  mounted(){
+    this.$store.dispatch("prepare")
+  },
   computed:{
     ...mapState({test:state=>state.timetable.test})
   }
