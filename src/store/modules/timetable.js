@@ -22,7 +22,32 @@ const state = ()=>({
                 color:"#FFEECE",
                 color2:"#FFBC42"
             }
-        }
+        },
+        {
+            id:24589,
+            date: "2020-10-30",
+            start: 11,
+            end: 12,
+            group:{
+                level:"A2",
+                name:"Liberman",
+                color:"#FFEECE",
+                color2:"#FFBC42"
+            }
+        },
+        {
+            id:24589,
+            date: "2020-11-3",
+            start: 11,
+            end: 12,
+            group:{
+                level:"A2",
+                name:"Liberman",
+                color:"#FFEECE",
+                color2:"#FFBC42"
+            }
+        },
+
     ],
     dates:[],
     test:"test"
@@ -34,24 +59,32 @@ const mutations = {
         let dates = [];
         state.lessons.forEach(el=>{
             const day = new Date(el.date);
-            if(dates[dates.length -1] !== day) {
-                if (!dates[dates.length - 1] || day - dates[dates.length - 1] <= 86402000)
-                    dates.push(day);
-                else {
-                    let middleDay = new Date();
-                    let lastDay = dates[dates.length - 1];
 
-                    while(middleDay > lastDay){
-                        middleDay = new Date(day - 86400000);
-                        dates.push(middleDay)
-                    }
-                }
+            // Первый день
+            if(!dates[dates.length - 1]) {
+                dates.push(day);
+                return;
+            }
+
+            // сдедующий день без перерыва
+            if(
+                dates[dates.length - 1].getTime() < day.getTime() &&
+                dates[dates.length - 1].getTime() + 86400000  > day.getTime() ){
+                dates.push(day);
+                return;
+            }
+
+            // Обработка разрыва
+            while (dates[dates.length - 1].getTime() < day.getTime()){
+                dates.push(new Date(dates[dates.length - 1].getTime() + 86400000));
+
             }
         });
 
         // диагностика дат - отладка
         state.dates = dates
     },
+    // Это проверочная мутация для тестов - не запускать
     TEST_M(state){
         state.dates=[0,1]
     }
