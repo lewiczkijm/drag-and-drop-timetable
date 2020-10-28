@@ -1,5 +1,5 @@
 <template>
-    <div class="lesson-ticket" :style="{background:data.group.color}">
+    <div @mousedown="move" class="lesson-ticket" :style="{background:data.group.color}">
         <div class="holder" :style="{background:data.group.color2}" ></div>
         <div class="container">
             <div>{{startTime}} - {{endTime}}</div>
@@ -7,7 +7,7 @@
                 {{data.group.level}} - {{groupName}}
             </div>
         </div>
-        <div class="holder-down" ></div>
+        <div class="holder-down" @mousedown.stop="resize" ></div>
     </div>
 </template>
 
@@ -39,6 +39,21 @@
             }
         },
         methods:{
+            resize(){
+                console.log(1)
+            },
+            move(){
+                console.log(this);
+                function move(e){
+                    console.log(e)
+                }
+                function stop(){
+                    window.removeEventListener("mousemove",move);
+                    window.removeEventListener("mouseup",stop);
+                }
+                window.addEventListener("mousemove",move);
+                window.addEventListener("mouseup",stop);
+            }
         }
     }
 </script>
