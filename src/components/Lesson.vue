@@ -28,8 +28,10 @@
             }
         },
         methods:{
+            // Изменение длины урока. Внимание!!! Работает со свойством document. Вносит временные изменения.
             resize(){
-                this.mouseHandle(console.log)
+                document.body.style.cursor = "n-resize";
+                this.mouseHandle(console.log,()=> document.body.style.cursor = "default")
             },
             move(){
                 this.mouseHandle(console.log)
@@ -39,14 +41,15 @@
 
             /**
              * Обработка прертаскивания мыши.
-             * Принимает коллбек.
+             * Принимает коллбек. и коллбек завершения
              * Обрабатывает перемещение мыши и автомвтически отписывается от событий и отключается при отпускании мыши
              * При перемещении мыши в другую ячейку вызывает коллбек.
              *
              * Внимание!!! Взаимодействует напрямую с window, подписывается на события  "mousemove", "mouseup"
              * @param callback
+             * @param exitCallback
              */
-            mouseHandle(callback){
+            mouseHandle(callback,exitCallback){
                 const self = this;
                 let x = 0;
                 let y = 0;
@@ -60,6 +63,7 @@
                 function stop(){
                     window.removeEventListener("mousemove",move);
                     window.removeEventListener("mouseup",stop);
+                    if(exitCallback) exitCallback()
                 }
                 window.addEventListener("mousemove",move);
                 window.addEventListener("mouseup",stop);
