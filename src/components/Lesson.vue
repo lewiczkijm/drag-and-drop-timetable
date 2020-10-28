@@ -1,10 +1,10 @@
 <template>
     <div style="width: fit-content">
-    <div class="lesson-ticket" :style="{background:group.color,height: height + 'px'}">
-        <div class="holder" :style="{background:group.color2}" ></div>
+    <div class="lesson-ticket" :style="{background:data.group.color,height: height + 'px'}">
+        <div class="holder" :style="{background:data.group.color2}" ></div>
         <div class="container">
-            <div>{{start}} - {{end}}</div>
-            <div class="group-box">{{group.level}} - {{group.name}}</div>
+            <div>{{startTime}} - {{endTime}}</div>
+            <div class="group-box">{{data.group.level}} - {{data.group.name}}</div>
         </div>
     </div>
         <div class="holder-down" @mousedown="startResize" ></div>
@@ -13,24 +13,33 @@
 
 <script>
     const step = 57.75;
+
+    /**
+     * Преобразование времени из числа в строку вида 8:30
+     * @param time
+     * @returns {string}
+     */
+    function fmtTime(time) {
+        const hours = ~~time;
+        const minutes = hours - time?"30":"00";
+        return hours + ":" + minutes
+    }
+
     export default {
         // Тестовые данные. Впоследствии заменить на полученные из store
         name: "Lesson",
+        props:["data"],
         data:()=>({
             // Время начала и окончания урока - в будушем computed
-            start:"10:30",
-            end:"11:30",
-            group:{
-                level:"B2",
-                name:"Kolette",
-                color:"#FFEECE",
-                color2:"#FFBC42"
-            },
             /* В будущем рассчетный параметр. Задает высоту элемента,
             *  по логике - продолжительность урока
             * */
             height:0
         }),
+        computed:{
+            startTime:function (){ return fmtTime(this.data.start)},
+            endTime:function (){ return fmtTime(this.data.end)}
+        },
         methods:{
 
             // Масштабирование карточки урока
