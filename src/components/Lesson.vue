@@ -13,24 +13,13 @@
 
 <script>
 
-    /**
-     * Преобразование времени из числа в строку вида 8:30
-     * @param time
-     * @returns {string}
-     */
-    function fmtTime(time) {
-        const hours = ~~time;
-        const minutes = hours - time?"30":"00";
-        return hours + ":" + minutes
-    }
-
     export default {
         // Тестовые данные. Впоследствии заменить на полученные из store
         name: "Lesson",
         props:["data","zeroArea"],
         computed:{
-            startTime:function (){ return fmtTime(this.data.start)},
-            endTime:function (){ return fmtTime(this.data.end)},
+            startTime:function (){ return this.fmtTime(this.data.start)},
+            endTime:function (){ return this.fmtTime(this.data.end)},
             groupName:function () {
                 if(this.data.group.name.length <=7)
                 return this.data.group.name;
@@ -40,13 +29,33 @@
         },
         methods:{
             resize(){
-                //console.log(this.zeroArea())
+                this.mouseHandle(console.log)
             },
             move(){
+                this.mouseHandle(console.log)
+            },
+
+
+
+            /**
+             * Обработка прертаскивания мыши.
+             * Принимает коллбек.
+             * Обрабатывает перемещение мыши и автомвтически отписывается от событий и отключается при отпускании мыши
+             * При перемещении мыши в другую ячейку вызывает коллбек.
+             *
+             * Внимание!!! Взаимодействует напрямую с window, подписывается на события  "mousemove", "mouseup"
+             * @param callback
+             */
+            mouseHandle(callback){
                 const self = this;
+                let x = 0;
+                let y = 0;
                 function move(e){
                     const coordinates = self.zeroArea(e.clientX,e.clientY);
-                    console.log(coordinates)
+                    if(!coordinates) return;
+                    if( x && y && (x !== coordinates.x || y !== coordinates.y)) callback(coordinates);
+                    x = coordinates.x;
+                    y = coordinates.y;
                 }
                 function stop(){
                     window.removeEventListener("mousemove",move);
@@ -54,7 +63,21 @@
                 }
                 window.addEventListener("mousemove",move);
                 window.addEventListener("mouseup",stop);
+
+            },
+
+
+            /**
+             * Преобразование времени из числа в строку вида 8:30
+             * @param time
+             * @returns {string}
+             */
+            fmtTime(time){
+                const hours = ~~time;
+                const minutes = hours - time?"30":"00";
+                return hours + ":" + minutes
             }
+
         }
     }
 </script>
@@ -74,8 +97,7 @@
     border-radius: 4px;
 }
 .container{
-    padding: 10px 8px;
-    padding-right: 0;
+    padding: 10px 0 10px 8px;
     font-size: 12px;
     text-align: left;
 }
