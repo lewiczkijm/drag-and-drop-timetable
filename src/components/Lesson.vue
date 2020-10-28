@@ -3,7 +3,9 @@
         <div class="holder" :style="{background:data.group.color2}" ></div>
         <div class="container">
             <div>{{startTime}} - {{endTime}}</div>
-            <div class="group-box">{{data.group.level}} - {{data.group.name}}</div>
+            <div :title="data.group.name" class="group-box">
+                {{data.group.level}} - {{groupName}}
+            </div>
         </div>
         <div class="holder-down" ></div>
     </div>
@@ -28,7 +30,13 @@
         props:["data"],
         computed:{
             startTime:function (){ return fmtTime(this.data.start)},
-            endTime:function (){ return fmtTime(this.data.end)}
+            endTime:function (){ return fmtTime(this.data.end)},
+            groupName:function () {
+                if(this.data.group.name.length <=7)
+                return this.data.group.name;
+                else
+                return this.data.group.name.slice(0,6) + "..."
+            }
         },
         methods:{
         }
@@ -39,7 +47,9 @@
 .lesson-ticket{
     width: 132px;
     border-radius: 4px;
-    display: flex;
+    display: grid;
+    grid-template-columns: 6px auto;
+    grid-template-rows: auto 2px;
     min-height: 57.75px;
 }
 .holder{
@@ -62,5 +72,6 @@
     height: 2px;
     width: 100%;
     cursor: n-resize;
+    grid-area: auto / 1 / auto / 3;
 }
 </style>

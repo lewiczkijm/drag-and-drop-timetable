@@ -32,8 +32,8 @@ const state = ()=>({
             group:{
                 level:"A2",
                 name:"Liberman",
-                color:"#FFEECE",
-                color2:"#FFBC42"
+                color:"#CCC6FF",
+                color2:"#A499FF"
             },
             koordinates:{},
         },
@@ -45,8 +45,8 @@ const state = ()=>({
             group:{
                 level:"A2",
                 name:"Liberman",
-                color:"#FFEECE",
-                color2:"#FFBC42"
+                color:"#CCC6FF",
+                color2:"#A499FF"
             },
             koordinates:{}
         },
