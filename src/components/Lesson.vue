@@ -27,7 +27,7 @@
     export default {
         // Тестовые данные. Впоследствии заменить на полученные из store
         name: "Lesson",
-        props:["data"],
+        props:["data","zeroArea"],
         computed:{
             startTime:function (){ return fmtTime(this.data.start)},
             endTime:function (){ return fmtTime(this.data.end)},
@@ -40,7 +40,7 @@
         },
         methods:{
             resize(){
-                console.log(1)
+                //console.log(this.zeroArea())
             },
             move(){
                 console.log(this);

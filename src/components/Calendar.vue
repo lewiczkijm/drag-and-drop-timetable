@@ -8,11 +8,12 @@
     <div class="hours">
         <div class="hour" :key="hour" v-for="hour in time" >{{hour}}</div>
     </div>
-    <div class="area">
+    <div class="area" ref="area">
         <Lesson
                 :key="lesson.id"
                 v-for="lesson in lessons"
                 :data="lesson"
+                :zeroArea="getZeroKoordinats"
                 :style="{
                     gridColumn: lesson.koordinates.x,
                     gridRow: lesson.koordinates.y,
@@ -26,6 +27,12 @@
 <script>
     import {mapState} from "vuex"
     import Lesson from "./Lesson";
+                                //  ## Константы координатной сетки
+    const COLUMN = 150;         // ширина ячейки (x)
+    const ROW = 30;             // высота ячейки (y)
+    const COLUMNS = 7;          // количество ячеек по x
+    const ROWS = 24;            // количество ячеек по y
+
     export default {
         name: "Calendar",
         components: {Lesson},
@@ -42,6 +49,32 @@
                 lessons:state=>state.timetable.lessons,
                 dates:state=>state.timetable.dates
             })
+        },
+        methods:{
+
+
+            /**
+             * ## Получение координат мыши в системе рабочего поля.
+             * Нужно для верного рассчета позиции мыши при ресайзе и перетаскивании элементов
+             * Получено при помощи ref
+             *
+             * Возвращает координаты x y или false при выходе за пределы поля
+             * @param x {number}
+             * @param y {number}
+             * @returns {boolean|{x: number, y: number}}
+             */
+            getZeroKoordinats(x,y){
+                const box = this.$refs.area.getBoundingClientRect();
+                const top = box.top + pageYOffset;
+                const left = box.left + pageXOffset;
+                x = x-left;
+                y = y - top;
+                if(x < 0 || y < 0 || x > COLUMN * COLUMNS || y > ROW * ROWS) return false;
+                return {
+                    x: ~~(x / COLUMN),
+                    y: ~~(y / ROW)
+                }
+            }
         }
     }
 </script>
