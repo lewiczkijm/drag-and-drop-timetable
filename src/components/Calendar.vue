@@ -71,8 +71,8 @@
                 y = y - top;
                 if(x < 0 || y < 0 || x > COLUMN * COLUMNS || y > ROW * ROWS) return false;
                 return {
-                    x: ~~(x / COLUMN),
-                    y: ~~(y / ROW)
+                    x: ~~(x / COLUMN) + 1,
+                    y: ~~(y / ROW) + 1
                 }
             }
         }

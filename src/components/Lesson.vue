@@ -43,9 +43,10 @@
                 //console.log(this.zeroArea())
             },
             move(){
-                console.log(this);
+                const self = this;
                 function move(e){
-                    console.log(e)
+                    const coordinates = self.zeroArea(e.clientX,e.clientY);
+                    console.log(coordinates)
                 }
                 function stop(){
                     window.removeEventListener("mousemove",move);
@@ -66,6 +67,7 @@
     grid-template-columns: 6px auto;
     grid-template-rows: auto 2px;
     min-height: 57.75px;
+    user-select: none;
 }
 .holder{
     width: 6px;
