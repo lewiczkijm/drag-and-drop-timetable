@@ -5,82 +5,66 @@ test('First correct test', () => {
     expect(state.dates[1]).toBe(1);
 });
 
-
-test('CREATE_TIMETABLE - Empty field with dates', () => {
-
-
-    const state = { timetable:[],lessons:[
-            {
-                id:24589,
-                date: "2020-10-20",
-                start: 9.5,
-                end: 10.5,
-                group:{
-                    level:"B2",
-                    name:"Kolette",
-                    color:"#FFEECE",
-                    color2:"#FFBC42"
-                }
+const state = { timetable:[],dates:[],
+    weekNames:[
+        "Mon","Tue","Wed","Thu","Fri","Sat","Sun"
+    ],
+    lessons:[
+        {
+            id:24589,
+            date: "2020-10-20",
+            start: 9.5,
+            end: 10.5,
+            group:{
+                level:"B2",
+                name:"Kolette",
+                color:"#FFEECE",
+                color2:"#FFBC42"
             }
-        ]};
+        },
+        {
+            id:24589,
+            date: "2020-10-20",
+            start: 11,
+            end: 12,
+            group:{
+                level:"A2",
+                name:"Liberman",
+                color:"#FFEECE",
+                color2:"#FFBC42"
+            }
+        },
+        {
+            id:24589,
+            date: "2020-10-21",
+            start: 11,
+            end: 12,
+            group:{
+                level:"A2",
+                name:"Liberman",
+                color:"#FFEECE",
+                color2:"#FFBC42"
+            }
+        },
+
+    ]
+};
+
+
+test('CREATE_TIMETABLE - week output', () => {
+
 
 
     timetable.mutations.CREATE_TIMETABLE(state);
-    expect(state.timetable.length).toBe(7);
-    expect(state.timetable[0].date).toBe(19);
+    expect(state.dates.length).toBe(7);
+    expect(state.dates[0]).toBe("Mon, 19");
+    expect(state.dates[6]).toBe("Sun, 25");
 });
 
-test('CREATE_TIMETABLE - right lessons location', () => {
+test('CREATE_TIMETABLE - right coordinates to grid', () => {
 
-
-    const state = { timetable:[],lessons:[
-            {
-                id:24589,
-                date: "2020-10-20",
-                start: 9.5,
-                end: 10.5,
-                group:{
-                    level:"B2",
-                    name:"Kolette",
-                    color:"#FFEECE",
-                    color2:"#FFBC42"
-                }
-            }
-        ]};
 
 
     timetable.mutations.CREATE_TIMETABLE(state);
-    expect(state.timetable[1].time[8].lesson).toBe(undefined);
-    expect(state.timetable[1].time[9].lesson.id).toBe(24589);
-    expect(state.timetable[1].time[10].lesson.id).toBe(24589);
-    expect(state.timetable[1].time[11].lesson).toBe(undefined);
-
-    expect(state.timetable[2].time[8].lesson).toBe(undefined);
-
+    expect(state.lessons[0].koordinates).toEqual({"x":2,"y":10,"yEnd":12});
 });
-
-test('CREATE_TIMETABLE - flags isStart on start lesson', () => {
-
-
-    const state = { timetable:[],lessons:[
-            {
-                id:24589,
-                date: "2020-10-20",
-                start: 9.5,
-                end: 10.5,
-                group:{
-                    level:"B2",
-                    name:"Kolette",
-                    color:"#FFEECE",
-                    color2:"#FFBC42"
-                }
-            }
-        ]};
-
-
-    timetable.mutations.CREATE_TIMETABLE(state);
-    expect(state.timetable[1].time[9].isStart).toBe(true);
-    expect(state.timetable[1].time[10].isStart).toBe(false);
-
-});
-

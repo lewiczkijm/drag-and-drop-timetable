@@ -67,6 +67,7 @@ const mutations = {
          * @param startDay Начало недели - 0 воскресенье, 1 - понедельник ...
          */
         function createEmptyWeek(startDate,startDay=1) {
+            const HOUR0 = 5;          // час начала рабочего дня
             const d = new Date(startDate);
             const START_DATE = d.getDay() - startDay;
             let activeDate = new Date(d.getTime() - 86400000 * START_DATE);     // нахождение первого дня недели
@@ -76,8 +77,18 @@ const mutations = {
                 state.dates.push(state.weekNames[i] + ", " + (activeDate.getDate() + i))
             }
 
-            const incrementActiveDate = ()=>activeDate = new Date(activeDate.getTime() + 86400000);
+            // Рассчет каординат grid в формате x, y, y-end
+            state.lessons.forEach(key=>{
+                const x = (new Date(key.date)).getDate() - activeDate.getDate() + 1;
+                const y = key.start * 2 - HOUR0 * 2 + 1;
+                const yEnd = key.end * 2 - HOUR0 * 2 + 1;
+                key.koordinates = {x:x,y:y,yEnd:yEnd}
+            });
 
+
+
+            // Создание такой структуры timetable не актуально для таблицы, написанной на grid
+            const incrementActiveDate = ()=>activeDate = new Date(activeDate.getTime() + 86400000);
 
             for (let i=0;i < 7;i ++){
                 const dayTT=[];
