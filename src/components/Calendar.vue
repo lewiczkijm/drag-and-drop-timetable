@@ -8,14 +8,27 @@
     <div class="hours">
         <div class="hour" :key="hour" v-for="hour in time" >{{hour}}</div>
     </div>
-    <div class="area"><div></div></div>
+    <div class="area">
+        <Lesson
+                :key="lesson.id"
+                v-for="lesson in lessons"
+                :data="lesson"
+                :style="{
+                    gridColumn: lesson.koordinates.x,
+                    gridRow: lesson.koordinates.y,
+                    gridRowRnd: lesson.koordinates.yEnd
+                }"
+        />
+    </div>
     </div>
 </template>
 
 <script>
     import {mapState} from "vuex"
+    import Lesson from "./Lesson";
     export default {
         name: "Calendar",
+        components: {Lesson},
         data:function(){
             let time = [];
             for (let i = 6;i < 17;i ++) time.push(`${i}:00`);

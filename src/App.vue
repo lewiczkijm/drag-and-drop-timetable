@@ -2,19 +2,16 @@
   <div id="app">
 
     <Calendar/>
-    <Lesson/>
   </div>
 </template>
 
 <script>
 import {mapState} from 'vuex'
-import Lesson from "./components/Lesson";
 import Calendar from "./components/Calendar";
 export default {
   name: 'App',
   components: {
-    Calendar,
-    Lesson
+    Calendar
   },
   // Инициализация подготовки данных в store.
   // Должна происходить на ранней стадии загрузки, но не в корне, а в компоненте
@@ -34,6 +31,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   background: #E5E5E5;
   color: #2c3e50;
-  margin-top: 60px;
+  margin: 0;
+  padding: 1em;
 }
 </style>
