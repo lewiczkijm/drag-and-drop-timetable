@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     viewBox="0 0 1054 728">
+    <!-- SVG code here  -->
+    <line
+            x1="0" y1="60"  x2="1254" y2="60"
+            stroke="#D9D9D9" stroke-dasharray="5,5" stroke-width="1"
+    />
+    <line
+            x1="0" y1="121"  x2="1254" y2="121"
+            stroke="#D9D9D9" stroke-dasharray="5,5" stroke-width="1"
+    />
+    <line
+            x1="0" y1="182"  x2="1254" y2="182"
+            stroke="#D9D9D9" stroke-dasharray="5,5" stroke-width="1"
+    />
+    <line
+            x1="0" y1="243"  x2="1254" y2="243"
+            stroke="#D9D9D9" stroke-dasharray="5,5" stroke-width="1"
+    />
+    <line
+            x1="0" y1="304"  x2="1254" y2="304"
+            stroke="#D9D9D9" stroke-dasharray="5,5" stroke-width="1"
+    />
+    <line
+            x1="0" y1="365"  x2="1254" y2="365"
+            stroke="#D9D9D9" stroke-dasharray="5,5" stroke-width="1"
+    />
+    <line
+            x1="0" y1="426"  x2="1254" y2="426"
+            stroke="#D9D9D9" stroke-dasharray="5,5" stroke-width="1"
+    />
+    <line
+            x1="0" y1="487"  x2="1254" y2="487"
+            stroke="#D9D9D9" stroke-dasharray="5,5" stroke-width="1"
+    />
+    <line
+            x1="0" y1="548"  x2="1254" y2="548"
+            stroke="#D9D9D9" stroke-dasharray="5,5" stroke-width="1"
+    />
+    <line
+            x1="0" y1="609"  x2="1254" y2="609"
+            stroke="#D9D9D9" stroke-dasharray="5,5" stroke-width="1"
+    />
+    <line
+            x1="0" y1="670"  x2="1254" y2="670"
+            stroke="#D9D9D9" stroke-dasharray="5,5" stroke-width="1"
+    />
+
+</svg>
