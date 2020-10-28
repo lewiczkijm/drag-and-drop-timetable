@@ -16,7 +16,7 @@
                 :style="{
                     gridColumn: lesson.koordinates.x,
                     gridRow: lesson.koordinates.y,
-                    gridRowRnd: lesson.koordinates.yEnd
+                    gridRowEnd: lesson.koordinates.yEnd
                 }"
         />
     </div>

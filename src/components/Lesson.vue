@@ -1,18 +1,15 @@
 <template>
-    <div style="width: fit-content">
-    <div class="lesson-ticket" :style="{background:data.group.color,height: height + 'px'}">
+    <div class="lesson-ticket" :style="{background:data.group.color}">
         <div class="holder" :style="{background:data.group.color2}" ></div>
         <div class="container">
             <div>{{startTime}} - {{endTime}}</div>
             <div class="group-box">{{data.group.level}} - {{data.group.name}}</div>
         </div>
-    </div>
-        <div class="holder-down" @mousedown="startResize" ></div>
+        <div class="holder-down" ></div>
     </div>
 </template>
 
 <script>
-    const step = 57.75;
 
     /**
      * Преобразование времени из числа в строку вида 8:30
@@ -29,57 +26,11 @@
         // Тестовые данные. Впоследствии заменить на полученные из store
         name: "Lesson",
         props:["data"],
-        data:()=>({
-            // Время начала и окончания урока - в будушем computed
-            /* В будущем рассчетный параметр. Задает высоту элемента,
-            *  по логике - продолжительность урока
-            * */
-            height:0
-        }),
         computed:{
             startTime:function (){ return fmtTime(this.data.start)},
             endTime:function (){ return fmtTime(this.data.end)}
         },
         methods:{
-
-            // Масштабирование карточки урока
-            startResize(){
-                let startY = 0;
-                let baseY = 0;
-                let self = this;
-                const height = this.height;
-
-                // Рассчет размера, в зависимости от положения мыши
-                function move(e){
-                    if(startY === 0)
-                        baseY = e.clientY;
-                    else {
-                        let move = (baseY - e.clientY) * -1;
-                        if(move > 0){
-                            move = Math.ceil(move/step) * step + step;
-                            self.height = move
-                        }
-                        else {
-                            move = Math.ceil((height + move)/step)*step;
-                            console.log(move);
-                            self.height =move
-                            //move = Math.round((self.height + move)/step)* step
-                        }
-
-                    }
-                    startY = e.clientY
-                }
-
-                // Отписка от событий и остановка перемещения
-                function stop(){
-                    window.removeEventListener("mousemove",move);
-                    window.removeEventListener("mouseup",stop);
-                }
-
-                // Подписка на события window для того, чтобы события мыши улавливались по всему экрану
-                window.addEventListener("mousemove",move);
-                window.addEventListener("mouseup",stop)
-            },
         }
     }
 </script>
@@ -97,11 +48,13 @@
 }
 .container{
     padding: 10px 8px;
+    padding-right: 0;
     font-size: 12px;
     text-align: left;
 }
 .group-box{
-    /*padding: 1px;*/
+    width: max-content;
+    padding: 1px;
     font-size: 18px;
 }
 .holder-down {

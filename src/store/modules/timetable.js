@@ -21,7 +21,8 @@ const state = ()=>({
                 name:"Kolette",
                 color:"#FFEECE",
                 color2:"#FFBC42"
-            }
+            },
+            koordinates:{},
         },
         {
             id:24575,
@@ -33,19 +34,21 @@ const state = ()=>({
                 name:"Liberman",
                 color:"#FFEECE",
                 color2:"#FFBC42"
-            }
+            },
+            koordinates:{},
         },
         {
             id:24554,
             date: "2020-10-21",
             start: 11,
-            end: 12,
+            end: 12.5,
             group:{
                 level:"A2",
                 name:"Liberman",
                 color:"#FFEECE",
                 color2:"#FFBC42"
-            }
+            },
+            koordinates:{}
         },
 
     ],

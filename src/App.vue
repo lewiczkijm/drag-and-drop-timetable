@@ -19,7 +19,7 @@ export default {
     this.$store.dispatch("prepare")
   },
   computed:{
-    ...mapState({test:state=>state.timetable.test})
+    ...mapState({test:state=>state.timetable.lessons[0]})
   }
 }
 </script>
