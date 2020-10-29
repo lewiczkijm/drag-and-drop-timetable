@@ -134,7 +134,20 @@ const mutations = {
 const actions = {
     prepare({ commit }){
         commit("CREATE_TIMETABLE")
+    },
+
+    // Перемещение урока
+    move({commit},moveData){
+        commit;
+        moveData
+    },
+
+    // Изменение времени урока
+    resize({commit},moveData){
+        commit;
+        moveData
     }
+
 };
 
 export default {
