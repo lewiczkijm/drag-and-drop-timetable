@@ -8,6 +8,8 @@ const data = {"id":24589,"date":"2020-10-20","start":9.5,"end":10.5,
     "koordinates":{"x":2,"y":10,"yEnd":12}
 };
 
+
+
 const spy = jest.fn();
 
 function zeroArea1(){
@@ -29,6 +31,9 @@ function zeroArea4(x,y){
     spy(4);
     false
 }
+
+const $store = {dispatch:jest.fn()};
+
 
 test('First correct test', () => {
     expect(1).toBe(1);
@@ -54,7 +59,7 @@ test('long group name', () => {
 // Тестировать ножатие и перемещение мыши с функцией zeroArea и моками dispatch
 
 test('mouse drag and drop - start zeroArea', async () => {
-    const wrapper = mount(Lesson,{propsData:{data,zeroArea:zeroArea1}});
+    const wrapper = mount(Lesson,{propsData:{data,zeroArea:zeroArea1},mocks:{$store}});
     await wrapper.trigger("mousedown");
     await wrapper.trigger("mousemove",{clientX:250,clientY:440});
     await window.dispatchEvent(new Event('mousedown'));

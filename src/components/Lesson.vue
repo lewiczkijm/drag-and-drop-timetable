@@ -31,13 +31,23 @@
 
             // Изменение длины урока. Внимание!!! Работает со свойством document. Вносит временные изменения.
             resize(){
+                const dispatch = this.$store.dispatch;
                 document.body.style.cursor = "n-resize";
-                this.mouseHandle(console.log,()=> document.body.style.cursor = "default")
+                this.mouseHandle(
+                    coordinates=>{
+                        dispatch("resize",{id:this.data.id,x:coordinates.x,y:coordinates.y})
+                    }
+                    ,()=> document.body.style.cursor = "default"
+                )
             },
 
-
             move(){
-                this.mouseHandle(console.log)
+                const dispatch = this.$store.dispatch;
+                this.mouseHandle(
+                    coordinates=>{
+                        dispatch("move",{id:this.data.id,x:coordinates.x,y:coordinates.y})
+                    }
+                )
             },
 
 

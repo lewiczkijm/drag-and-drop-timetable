@@ -107,6 +107,7 @@ const actions = {
     resize({commit},moveData){
         // TODO make from stub
         commit;
+        console.log(moveData);
         moveData
     }
 
