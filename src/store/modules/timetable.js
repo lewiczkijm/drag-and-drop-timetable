@@ -100,7 +100,7 @@ const actions = {
     move({commit},moveData){
         // TODO make from stub
         commit;
-        moveData
+        console.log(moveData);
     },
 
     // Изменение времени урока
@@ -108,7 +108,7 @@ const actions = {
         // TODO make from stub
         commit;
         console.log(moveData);
-        moveData
+
     }
 
 };

@@ -35,6 +35,7 @@
                 document.body.style.cursor = "n-resize";
                 this.mouseHandle(
                     coordinates=>{
+
                         dispatch("resize",{id:this.data.id,x:coordinates.x,y:coordinates.y})
                     }
                     ,()=> document.body.style.cursor = "default"

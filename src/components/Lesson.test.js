@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import { mount } from '@vue/test-utils'
 import Lesson from './Lesson'
 
@@ -60,14 +61,60 @@ test('long group name', () => {
 
 test('mouse drag and drop - start zeroArea', async () => {
     const wrapper = mount(Lesson,{propsData:{data,zeroArea:zeroArea1},mocks:{$store}});
+
     await wrapper.trigger("mousedown");
-    await wrapper.trigger("mousemove",{clientX:250,clientY:440});
-    await window.dispatchEvent(new Event('mousedown'));
+
     // Нельзя протестировать передачу координат мыши из - за особенностей реализации DOM
     // Тестируем только факт движения и передаем дальше фейковые параметры
     await window.dispatchEvent(new Event('mousemove'));
     expect(spy).toHaveBeenCalledWith(1);
+    expect($store.dispatch).toHaveBeenCalledTimes(0);
     await window.dispatchEvent(new Event('mouseup'));
     expect(spy).toHaveBeenCalledTimes(1);
+
+});
+
+
+test('mouse drag and drop - Test dispatch on move', async () => {
+    const wrapper = mount(Lesson,{propsData:{data,zeroArea:zeroArea1},mocks:{$store}});
+
+    await wrapper.trigger("mousedown");
+
+    // Нельзя протестировать передачу координат мыши из - за особенностей реализации DOM
+    // Тестируем только факт движения и передаем дальше фейковые параметры
+    await window.dispatchEvent(new Event('mousemove'));
+
+    await wrapper.setData({zeroArea:zeroArea2}); // Инъекция вызывает ошибку [Vue warn] из-за мутации: Prop being mutated: "zeroArea"
+
+    await window.dispatchEvent(new Event('mousemove'));
+
+    await window.dispatchEvent(new Event('mouseup'));
+    await window.dispatchEvent(new Event('mousemove'));
+
+    expect($store.dispatch).toHaveBeenCalledTimes(1);
+    expect($store.dispatch).toHaveBeenCalledWith("move",{"id": 24589, "x": 1, "y": 2});
+
+});
+
+
+test('resize - ', async () => {
+    const wrapper = mount(Lesson,{propsData:{data,zeroArea:zeroArea1},mocks:{$store}});
+    await wrapper.find(".holder-down").trigger("mousedown");
+
+    // Нельзя протестировать передачу координат мыши из - за особенностей реализации DOM
+    // Тестируем только факт движения и передаем дальше фейковые параметры
+    await window.dispatchEvent(new Event('mousemove'));
+
+    await wrapper.setData({zeroArea:zeroArea2}); // Инъекция вызывает ошибку [Vue warn] из-за мутации: Prop being mutated: "zeroArea"
+
+    await window.dispatchEvent(new Event('mousemove'));
+
+    await window.dispatchEvent(new Event('mouseup'));
+    await window.dispatchEvent(new Event('mousemove'));
+
+
+    expect($store.dispatch).toHaveBeenCalledTimes(2);
+    expect($store.dispatch).toHaveBeenCalledWith("move",{"id": 24589, "x": 1, "y": 2});
+
 
 });
