@@ -1,8 +1,9 @@
 <template>
     <div class="container">
     <div class="days">
-
+        <div><div style="{position: absolute;marginTop: 1.9em;marginLeft: 6px;}"><img src="Vector100.png"></div></div>
         <div v-for="day in dates" :key="day" class="day">{{day}}</div>
+        <div><div style="{position: absolute;marginTop: 1.9em;marginLeft: -6px;}"><img src="Vector101.png"></div></div>
 
     </div>
     <div class="hours">
@@ -89,7 +90,7 @@
 }
 .days{
     display: grid;
-    grid-template-columns:repeat(7, 150px);
+    grid-template-columns: 0 repeat(7, 150px) 0;
     grid-column-start: 2;
     grid-column-end: 9;
 }
@@ -101,6 +102,8 @@
     border-right: solid 1px #D9D9D9;
 }
 .day:first-child{border-left: 0}
+.day:nth-child(2){border-left: 0}
+.day:nth-child(8){border-right: 0}
 .day:last-child{border-right:0}
 
 .hours{

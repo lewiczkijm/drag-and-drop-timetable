@@ -127,7 +127,7 @@
 .holder-down {
     /*background: #f00;*/
     height: 2px;
-    width: 100%;
+    background: #ffffff;
     cursor: n-resize;
     grid-area: auto / 1 / auto / 3;
 }
