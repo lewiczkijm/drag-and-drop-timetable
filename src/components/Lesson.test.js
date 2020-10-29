@@ -18,20 +18,11 @@ function zeroArea1(){
     return {x:1,y:1}
 }
 
-function zeroArea2(x,y){
+function zeroArea2(){
     spy(2);
     return {x:1,y:2}
 }
 
-function zeroArea3(x,y){
-    spy(3);
-    return {x:2,y:2}
-}
-
-function zeroArea4(x,y){
-    spy(4);
-    false
-}
 
 const $store = {dispatch:jest.fn()};
 

@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import timetable from './timetable'
 test('First correct test', () => {
     const state = {dates:[]};
