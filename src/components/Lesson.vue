@@ -28,11 +28,14 @@
             }
         },
         methods:{
+
             // Изменение длины урока. Внимание!!! Работает со свойством document. Вносит временные изменения.
             resize(){
                 document.body.style.cursor = "n-resize";
                 this.mouseHandle(console.log,()=> document.body.style.cursor = "default")
             },
+
+
             move(){
                 this.mouseHandle(console.log)
             },
