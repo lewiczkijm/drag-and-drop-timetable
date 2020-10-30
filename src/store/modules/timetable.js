@@ -85,25 +85,22 @@ const mutations = {
     },
 
     MOVE_LESSON(state,payload){
-        const currentLesson = state.lessons.find(el=>el.id === payload.id);
-        currentLesson.koordinates.x = payload.x;
-        currentLesson.koordinates.y = payload.y;
-        currentLesson.koordinates.yEnd = payload.yEnd;
+        if(!payload) return;
+        payload.currentLesson.koordinates.x = payload.x;
+        payload.currentLesson.koordinates.y = payload.y;
+        payload.currentLesson.koordinates.yEnd = payload.yEnd;
 
         // Рассчет нового времени
-        currentLesson. start = currentLesson.koordinates.y /2+ 0.5 + 4;
-        currentLesson.end = currentLesson.koordinates.yEnd /2+ 0.5 + 4
+        payload.currentLesson. start = payload.currentLesson.koordinates.y /2+ 0.5 + 4;
+        payload.currentLesson.end = payload.currentLesson.koordinates.yEnd /2+ 0.5 + 4
 
 
 
     },
     RESIZE_LESSON(state,payload){
-        const currentLesson = state.lessons.find(el=>el.id === payload.id);
-
-        currentLesson.koordinates.yEnd  =payload.yEnd;
-
-        // Рассчет нового времени
-        currentLesson.end = currentLesson.koordinates.yEnd /2+ 0.5 + 4
+        if(!payload) return;
+        payload.currentLesson.koordinates.yEnd  =payload.yEnd;
+        payload.currentLesson.end = payload.currentLesson.koordinates.yEnd /2+ 0.5 + 4
     },
     // Это проверочная мутация для тестов - не запускать
     TEST_M(state){
@@ -116,26 +113,39 @@ const actions = {
     prepare({ commit }){
         commit("CREATE_TIMETABLE")
     },
+    review({state},moveData){
+        state;
+        // Контроль границ
+        if(moveData.x > 7 || moveData.yEnd > 25) return false;
+        return moveData
+    },
+    reviewResize({state},moveData){
+        state;
+        // Контроль границ
+        if(moveData.x > 7 || moveData.yEnd > 25) return false;
+        if(moveData.yEnd - moveData.currentLesson.koordinates.y < 2) return false;
+        return moveData
+    },
 
     // Перемещение урока
-    move({commit, state},moveData){
+    async move({commit, state,dispatch},moveData){
         const currentLesson = state.lessons.find(el=>el.id === moveData.id);
         const duration = currentLesson.koordinates.yEnd - currentLesson.koordinates.y;
         const yEnd = moveData.y + duration;
-        let payload = {x : moveData.x, y: moveData.y,yEnd, id:moveData.id};
-        // TODO контроль за отсутствием коллизий и коррекцию перемещений
+        let payload = {x : moveData.x, y: moveData.y,yEnd, id:moveData.id,currentLesson};
+        payload = await dispatch("review",payload);
         commit("MOVE_LESSON",payload);
     },
 
     // Изменение времени урока
-    resize({commit,state},moveData){
+    async resize({commit,state,dispatch},moveData){
         const currentLesson = state.lessons.find(el=>el.id === moveData.id);
         const duration = currentLesson.koordinates.yEnd - moveData.y;
         if(duration > 0)
              moveData.yEnd = currentLesson.koordinates.yEnd  -2;
         else moveData.yEnd = currentLesson.koordinates.yEnd  +2;
-
-        // TODO make from stub
+        moveData.currentLesson = currentLesson;
+        moveData = await dispatch("reviewResize",moveData);
         commit("RESIZE_LESSON",moveData);
     }
 
