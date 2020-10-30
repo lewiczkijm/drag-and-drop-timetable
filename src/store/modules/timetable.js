@@ -86,11 +86,9 @@ const mutations = {
 
     MOVE_LESSON(state,payload){
         const currentLesson = state.lessons.find(el=>el.id === payload.id);
-        const duration = currentLesson.koordinates.yEnd - currentLesson.koordinates.y;
-        // TODO Вставить контроль за отсутствием коллизий и коррекцию перемещений
         currentLesson.koordinates.x = payload.x;
         currentLesson.koordinates.y = payload.y;
-        currentLesson.koordinates.yEnd = payload.y + duration;
+        currentLesson.koordinates.yEnd = payload.yEnd;
 
         // Рассчет нового времени
         currentLesson. start = currentLesson.koordinates.y /2+ 0.5 + 4;
@@ -101,10 +99,8 @@ const mutations = {
     },
     RESIZE_LESSON(state,payload){
         const currentLesson = state.lessons.find(el=>el.id === payload.id);
-        const duration = currentLesson.koordinates.yEnd - payload.y;
-        if(duration > 0)
-            currentLesson.koordinates.yEnd  -=2;
-        else currentLesson.koordinates.yEnd  +=2;
+
+        currentLesson.koordinates.yEnd  =payload.yEnd;
 
         // Рассчет нового времени
         currentLesson.end = currentLesson.koordinates.yEnd /2+ 0.5 + 4
@@ -122,13 +118,23 @@ const actions = {
     },
 
     // Перемещение урока
-    move({commit},moveData){
-        // TODO make from stub
-        commit("MOVE_LESSON",moveData);
+    move({commit, state},moveData){
+        const currentLesson = state.lessons.find(el=>el.id === moveData.id);
+        const duration = currentLesson.koordinates.yEnd - currentLesson.koordinates.y;
+        const yEnd = moveData.y + duration;
+        let payload = {x : moveData.x, y: moveData.y,yEnd, id:moveData.id};
+        // TODO контроль за отсутствием коллизий и коррекцию перемещений
+        commit("MOVE_LESSON",payload);
     },
 
     // Изменение времени урока
-    resize({commit},moveData){
+    resize({commit,state},moveData){
+        const currentLesson = state.lessons.find(el=>el.id === moveData.id);
+        const duration = currentLesson.koordinates.yEnd - moveData.y;
+        if(duration > 0)
+             moveData.yEnd = currentLesson.koordinates.yEnd  -2;
+        else moveData.yEnd = currentLesson.koordinates.yEnd  +2;
+
         // TODO make from stub
         commit("RESIZE_LESSON",moveData);
     }
