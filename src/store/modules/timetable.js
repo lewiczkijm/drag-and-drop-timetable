@@ -84,11 +84,27 @@ const mutations = {
         });
     },
 
-
+    MOVE_LESSON(state,payload){
+        const currentLesson = state.lessons.find(el=>el.id === payload.id);
+        const duration = currentLesson.koordinates.yEnd - currentLesson.koordinates.y;
+        console.log(duration,payload);
+        // TODO Вставить контроль за отсутствием коллизий и коррекцию перемещений
+        currentLesson.koordinates.x = payload.x;
+        currentLesson.koordinates.y = payload.y;
+        currentLesson.koordinates.yEnd = payload.y + duration;
+    },
+    RESIZE_LESSON(state,payload){
+        const currentLesson = state.lessons.find(el=>el.id === payload.id);
+        const duration = currentLesson.koordinates.yEnd - payload.y;
+        if(duration > 0)
+            currentLesson.koordinates.yEnd  -=2;
+        else currentLesson.koordinates.yEnd  +=2;
+    },
     // Это проверочная мутация для тестов - не запускать
     TEST_M(state){
         state.dates=[0,1]
     }
+
 };
 
 const actions = {
@@ -99,16 +115,13 @@ const actions = {
     // Перемещение урока
     move({commit},moveData){
         // TODO make from stub
-        commit;
-        console.log(moveData);
+        commit("MOVE_LESSON",moveData);
     },
 
     // Изменение времени урока
     resize({commit},moveData){
         // TODO make from stub
-        commit;
-        console.log(moveData);
-
+        commit("RESIZE_LESSON",moveData);
     }
 
 };

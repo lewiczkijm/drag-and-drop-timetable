@@ -1,7 +1,7 @@
 <template>
-    <div @mousedown="move" class="lesson-ticket" :style="{background:data.group.color}">
+    <div @mousedown="move" class="lesson-ticket">
         <div class="holder" :style="{background:data.group.color2}" ></div>
-        <div class="container">
+        <div class="container" :style="{background:data.group.color}">
             <div>{{startTime}} - {{endTime}}</div>
             <div :title="data.group.name" class="group-box">
                 {{data.group.level}} - {{groupName}}
@@ -126,8 +126,8 @@
 }
 .holder-down {
     /*background: #f00;*/
-    height: 2px;
-    background: #ffffff;
+    height: 5px;
+    background: rgba(0,0,0,0);
     cursor: n-resize;
     grid-area: auto / 1 / auto / 3;
 }
