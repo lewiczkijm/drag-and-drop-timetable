@@ -87,11 +87,17 @@ const mutations = {
     MOVE_LESSON(state,payload){
         const currentLesson = state.lessons.find(el=>el.id === payload.id);
         const duration = currentLesson.koordinates.yEnd - currentLesson.koordinates.y;
-        console.log(duration,payload);
         // TODO Вставить контроль за отсутствием коллизий и коррекцию перемещений
         currentLesson.koordinates.x = payload.x;
         currentLesson.koordinates.y = payload.y;
         currentLesson.koordinates.yEnd = payload.y + duration;
+
+        // Рассчет нового времени
+        currentLesson. start = currentLesson.koordinates.y /2+ 0.5 + 4;
+        currentLesson.end = currentLesson.koordinates.yEnd /2+ 0.5 + 4
+
+
+
     },
     RESIZE_LESSON(state,payload){
         const currentLesson = state.lessons.find(el=>el.id === payload.id);
@@ -99,6 +105,9 @@ const mutations = {
         if(duration > 0)
             currentLesson.koordinates.yEnd  -=2;
         else currentLesson.koordinates.yEnd  +=2;
+
+        // Рассчет нового времени
+        currentLesson.end = currentLesson.koordinates.yEnd /2+ 0.5 + 4
     },
     // Это проверочная мутация для тестов - не запускать
     TEST_M(state){
