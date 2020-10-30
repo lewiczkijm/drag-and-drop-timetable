@@ -94,6 +94,7 @@ const mutations = {
 
         // Рассчет нового времени
         let diff = payload.currentLesson.koordinates.x - x;
+        // Нет стандартной функции получения даты вида YYYY-MM-DD
         let date = new Date(new Date(payload.currentLesson.date).getTime() + diff * 86400000);
         let dateStr = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
 
