@@ -107,8 +107,8 @@ test("action resize",async ()=>{
     const commit = jest.fn();
     const dispatch = jest.fn((type,moveData)=>moveData);
     await timetable.actions.resize({commit,state,dispatch},{id:24589,x:4,y:16});
-    expect(dispatch).toHaveBeenCalledWith("reviewResize",{currentLesson:state.lessons[2],id:24589,x:4,y:16,yEnd:16});
-    expect(commit).toHaveBeenCalledWith("RESIZE_LESSON",{currentLesson:state.lessons[2],id:24589,x:4,y:16,yEnd:16})
+    expect(dispatch).toHaveBeenCalledWith("reviewResize",{currentLesson:state.lessons[2],id:24589,x:4,y:16,yEnd:18});
+    expect(commit).toHaveBeenCalledWith("RESIZE_LESSON",{currentLesson:state.lessons[2],id:24589,x:4,y:16,yEnd:18})
 });
 
 // TODO Проверка контролья коллизий и прочих крайних случаев
