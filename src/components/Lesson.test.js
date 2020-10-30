@@ -83,7 +83,7 @@ test('mouse drag and drop - Test dispatch on move', async () => {
     await window.dispatchEvent(new Event('mousemove'));
 
     expect($store.dispatch).toHaveBeenCalledTimes(1);
-    expect($store.dispatch).toHaveBeenCalledWith("move",{"id": 24589, "x": 1, "y": 2});
+    expect($store.dispatch).toHaveBeenCalledWith("move",{"id": 24589, "x": 1, "y": 11});
 
 });
 
@@ -105,7 +105,7 @@ test('resize - ', async () => {
 
 
     expect($store.dispatch).toHaveBeenCalledTimes(2);
-    expect($store.dispatch).toHaveBeenCalledWith("move",{"id": 24589, "x": 1, "y": 2});
+    expect($store.dispatch).toHaveBeenCalledWith("move",{"id": 24589, "x": 1, "y": 11});
 
 
 });

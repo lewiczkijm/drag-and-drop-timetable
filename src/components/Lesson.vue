@@ -37,7 +37,7 @@
                     coordinates=>{
 
                         dispatch("resize",{id:this.data.id,x:coordinates.x,y:coordinates.y})
-                    }
+                    }, false
                     ,()=> document.body.style.cursor = "default"
                 )
             },
@@ -47,7 +47,7 @@
                 this.mouseHandle(
                     coordinates=>{
                         dispatch("move",{id:this.data.id,x:coordinates.x,y:coordinates.y})
-                    }
+                    }, true
                 )
             },
 
@@ -61,16 +61,22 @@
              *
              * Внимание!!! Взаимодействует напрямую с window, подписывается на события  "mousemove", "mouseup"
              * @param callback
+             * @param isMove Отличие между режимами перетаскивания и ресайза для мелких улучшений
              * @param exitCallback
              */
-            mouseHandle(callback,exitCallback){
+            mouseHandle(callback,isMove,exitCallback){
                 const self = this;
                 let x = 0;
                 let y = 0;
+                let correctorY = 0; // Корректировка для drag end drop, чтобы урок не прыгал, при попвтке двигать не за верх
                 function move(e){
                     const coordinates = self.zeroArea(e.clientX,e.clientY);
                     if(!coordinates) return;
-                    if( x && y && (x !== coordinates.x || y !== coordinates.y)) callback(coordinates);
+                    if(isMove && x === 0 && y === 0) correctorY = coordinates.y - self.data.koordinates.y;
+                    if( x && y && (x !== coordinates.x || y !== coordinates.y)) {
+                        if(isMove) coordinates.y -= correctorY;
+                        callback(coordinates);
+                    }
                     x = coordinates.x;
                     y = coordinates.y;
                 }
