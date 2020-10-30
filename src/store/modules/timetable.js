@@ -86,15 +86,20 @@ const mutations = {
 
     MOVE_LESSON(state,payload){
         if(!payload) return;
+
+        const x = payload.currentLesson.koordinates.x;
         payload.currentLesson.koordinates.x = payload.x;
         payload.currentLesson.koordinates.y = payload.y;
         payload.currentLesson.koordinates.yEnd = payload.yEnd;
 
         // Рассчет нового времени
+        let diff = payload.currentLesson.koordinates.x - x;
+        let date = new Date(new Date(payload.currentLesson.date).getTime() + diff * 86400000);
+        let dateStr = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+
         payload.currentLesson. start = payload.currentLesson.koordinates.y /2+ 0.5 + 4;
-        payload.currentLesson.end = payload.currentLesson.koordinates.yEnd /2+ 0.5 + 4
-
-
+        payload.currentLesson.end = payload.currentLesson.koordinates.yEnd /2+ 0.5 + 4;
+        payload.currentLesson.date = dateStr;
 
     },
     RESIZE_LESSON(state,payload){
@@ -113,12 +118,16 @@ const actions = {
     prepare({ commit }){
         commit("CREATE_TIMETABLE")
     },
+
+    // контроль при перетаскивании
     review({state},moveData){
         state;
         // Контроль границ
         if(moveData.x > 7 || moveData.yEnd > 25) return false;
         return moveData
     },
+
+    // контроль при ресайзе
     reviewResize({state},moveData){
         state;
         // Контроль границ
