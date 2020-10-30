@@ -124,7 +124,7 @@ const actions = {
     review({state},moveData){
         state;
         // Контроль границ
-        if(moveData.x > 7 || moveData.yEnd > 25) return false;
+        if(moveData.x > 7 || moveData.yEnd > 25 || moveData.y < 1) return false;
         return moveData
     },
 
