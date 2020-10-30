@@ -150,7 +150,10 @@ const actions = {
     // Изменение времени урока
     async resize({commit,state,dispatch},moveData){
         const currentLesson = state.lessons.find(el=>el.id === moveData.id);
-        moveData.yEnd = moveData.y;
+        const duration = currentLesson.koordinates.yEnd - moveData.y;
+        if(duration > 0)
+            moveData.yEnd = currentLesson.koordinates.yEnd  -2;
+        else moveData.yEnd = currentLesson.koordinates.yEnd  +2;
         moveData.currentLesson = currentLesson;
         moveData = await dispatch("reviewResize",moveData);
         commit("RESIZE_LESSON",moveData);
