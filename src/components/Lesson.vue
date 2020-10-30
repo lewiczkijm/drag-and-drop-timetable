@@ -74,8 +74,14 @@
                     if(!coordinates) return;
                     if(isMove && x === 0 && y === 0) correctorY = coordinates.y - self.data.koordinates.y;
                     if( x && y && (x !== coordinates.x || y !== coordinates.y)) {
-                        if(isMove) coordinates.y -= correctorY;
-                        callback(coordinates);
+                        if(isMove) {
+                            coordinates.y -= correctorY;
+                            callback(coordinates);
+                        } else {
+                            if(!((coordinates.y - x) % 2))
+                                callback(coordinates);
+                        }
+
                     }
                     x = coordinates.x;
                     y = coordinates.y;
