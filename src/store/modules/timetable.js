@@ -122,9 +122,27 @@ const actions = {
 
     // контроль при перетаскивании
     review({state},moveData){
-        state;
         // Контроль границ
         if(moveData.x > 7 || moveData.yEnd > 25 || moveData.y < 1) return false;
+
+        //Проверка на коллизии
+        let collision = false;
+        state.lessons.forEach(el=>{
+            // Отбрасываем случаи, когда процессинг не требуется
+            if(el.id === moveData.id) return;
+            if(el.koordinates.x !==moveData.x) return;
+
+            if(el.koordinates.y < moveData.yEnd && moveData.currentLesson.koordinates.y < el.koordinates.y) collision = true;
+            if(el.koordinates.yEnd > moveData.y && moveData.y > el.koordinates.y) collision = true;
+            if(el.koordinates.y < moveData.y &&  el.koordinates.yEnd > moveData.yEnd) collision = true;
+            if(el.koordinates.y > moveData.y &&  el.koordinates.yEnd < moveData.yEnd) collision = true;
+            if(moveData.y === el.koordinates.y) collision = true;
+            if(moveData.yEnd < el.koordinates.yEnd && moveData.y < el.koordinates.y && moveData.yEnd > el.koordinates.y) collision = true;
+            if(moveData.y < el.koordinates.y && moveData.yEnd === el.koordinates.yEnd) collision = true;
+        });
+
+        if(collision) return false;
+
         return moveData
     },
 
@@ -134,6 +152,17 @@ const actions = {
         // Контроль границ
         if(moveData.x > 7 || moveData.yEnd > 25) return false;
         if(moveData.yEnd - moveData.currentLesson.koordinates.y < 2) return false;
+
+        //Проверка на коллизии
+        let collision = false;
+        state.lessons.forEach(el=>{
+            if(el.id === moveData.id) return;
+            if(el.koordinates.x !==moveData.x) return;
+            if(el.koordinates.y < moveData.yEnd && moveData.currentLesson.koordinates.y < el.koordinates.y) collision = true;
+        });
+
+        if(collision) return false;
+
         return moveData
     },
 
