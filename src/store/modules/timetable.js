@@ -12,6 +12,46 @@ const state = ()=>({
     // Список уроков, возможно полученный от api
     lessons:[
         {
+            id:24599,
+            date: "2020-10-23",
+            start: 9.5,
+            end: 10.5,
+            group:{
+                level:"B2",
+                name:"Kolette",
+                color:"#FFEECE",
+                color2:"#FFBC42"
+            },
+            koordinates:{},
+        },
+        {
+            id:24595,
+            date: "2020-10-24",
+            start: 9.5,
+            end: 10.5,
+            group:{
+                level:"B2",
+                name:"Kolette",
+                color:"#FFEECE",
+                color2:"#FFBC42"
+            },
+            koordinates:{},
+        },
+        {
+            id:24597,
+            date: "2020-10-19",
+            start: 9.5,
+            end: 10.5,
+            group:{
+                level:"B2",
+                name:"Kolette",
+                color:"#FFEECE",
+                color2:"#FFBC42"
+            },
+            koordinates:{},
+        },
+
+        {
             id:24589,
             date: "2020-10-20",
             start: 9.5,
@@ -24,6 +64,20 @@ const state = ()=>({
             },
             koordinates:{},
         },
+        {
+            id:24569,
+            date: "2020-10-22",
+            start: 11,
+            end: 12,
+            group:{
+                level:"A2",
+                name:"Liberman",
+                color:"#CCC6FF",
+                color2:"#A499FF"
+            },
+            koordinates:{},
+        },
+
         {
             id:24575,
             date: "2020-10-20",
@@ -133,13 +187,12 @@ const actions = {
             if(el.id === moveData.id) return;
             if(el.koordinates.x !==moveData.x) return;
 
-            if(el.koordinates.y < moveData.yEnd && moveData.currentLesson.koordinates.y < el.koordinates.y) collision = true;
-            if(el.koordinates.yEnd > moveData.y && moveData.y > el.koordinates.y) collision = true;
-            if(el.koordinates.y < moveData.y &&  el.koordinates.yEnd > moveData.yEnd) collision = true;
-            if(el.koordinates.y > moveData.y &&  el.koordinates.yEnd < moveData.yEnd) collision = true;
-            if(moveData.y === el.koordinates.y) collision = true;
-            if(moveData.yEnd < el.koordinates.yEnd && moveData.y < el.koordinates.y && moveData.yEnd > el.koordinates.y) collision = true;
-            if(moveData.y < el.koordinates.y && moveData.yEnd === el.koordinates.yEnd) collision = true;
+            if(moveData.y < el.koordinates.yEnd && moveData.y> el.koordinates.y) {collision = true; return;}
+            if(el.koordinates.y < moveData.y &&  el.koordinates.yEnd > moveData.yEnd) {collision = true; return;}
+            if(el.koordinates.y > moveData.y &&  el.koordinates.yEnd < moveData.yEnd) {collision = true; return;}
+            if(moveData.y === el.koordinates.y) {collision = true; return;}
+            if(moveData.yEnd < el.koordinates.yEnd && moveData.y < el.koordinates.y && moveData.yEnd > el.koordinates.y) {collision = true; return;}
+            if(moveData.y < el.koordinates.y && moveData.yEnd === el.koordinates.yEnd) {collision = true; return;}
         });
 
         if(collision) return false;
@@ -183,9 +236,8 @@ const actions = {
         while(!payload && iterator){
             iterator --;
             incrementor += 1;
-            let yEnd;
             moveData.y = baseY + incrementor;
-            yEnd = moveData.y + duration;
+            let yEnd = moveData.y + duration;
             payload = {x : moveData.x, y: moveData.y,yEnd, id:moveData.id,currentLesson};
             payload = await dispatch("review",payload);
 
