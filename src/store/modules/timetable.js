@@ -122,6 +122,7 @@ const actions = {
 
     // контроль при перетаскивании
     review({state},moveData){
+
         // Контроль границ
         if(moveData.x > 7 || moveData.yEnd > 25 || moveData.y < 1) return false;
 
@@ -173,6 +174,30 @@ const actions = {
         const yEnd = moveData.y + duration;
         let payload = {x : moveData.x, y: moveData.y,yEnd, id:moveData.id,currentLesson};
         payload = await dispatch("review",payload);
+
+        // Автоперенос при коллизиях
+        let baseY = moveData.y;
+        let incrementor = 0;
+        let iterator = 55;
+
+        while(!payload && iterator){
+            iterator --;
+            incrementor += 1;
+            let yEnd;
+            moveData.y = baseY + incrementor;
+            yEnd = moveData.y + duration;
+            payload = {x : moveData.x, y: moveData.y,yEnd, id:moveData.id,currentLesson};
+            payload = await dispatch("review",payload);
+
+            if(payload) break;
+
+            moveData.y = baseY - incrementor;
+            yEnd = moveData.y + duration;
+            payload = {x : moveData.x, y: moveData.y,yEnd, id:moveData.id,currentLesson};
+            payload = await dispatch("review",payload);
+
+        }
+
         commit("MOVE_LESSON",payload);
     },
 
