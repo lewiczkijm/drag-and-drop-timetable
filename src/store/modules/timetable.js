@@ -1,3 +1,4 @@
+const DAY = 86400000;
 const state = ()=>({
     timetable: [
 /*
@@ -122,7 +123,7 @@ const mutations = {
 
         const d = new Date(state.lessons[0].date);
         const START_DATE = d.getDay() - startDay;
-        let activeDate = new Date(d.getTime() - 86400000 * START_DATE);     // нахождение первого дня недели
+        let activeDate = new Date(d.getTime() - DAY * START_DATE);     // нахождение первого дня недели
 
         // Получение списка дней недели с датами
         for(let i = 0;i < 7;i ++){
@@ -149,7 +150,7 @@ const mutations = {
         // Рассчет нового времени
         let diff = payload.currentLesson.koordinates.x - x;
         // Нет стандартной функции получения даты вида YYYY-MM-DD
-        let date = new Date(new Date(payload.currentLesson.date).getTime() + diff * 86400000);
+        let date = new Date(new Date(payload.currentLesson.date).getTime() + diff * DAY);
         let dateStr = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
 
         payload.currentLesson. start = payload.currentLesson.koordinates.y /2+ 0.5 + 4;
@@ -192,7 +193,7 @@ const actions = {
             if(el.koordinates.y > moveData.y &&  el.koordinates.yEnd < moveData.yEnd) {collision = true; return;}
             if(moveData.y === el.koordinates.y) {collision = true; return;}
             if(moveData.yEnd < el.koordinates.yEnd && moveData.y < el.koordinates.y && moveData.yEnd > el.koordinates.y) {collision = true; return;}
-            if(moveData.y < el.koordinates.y && moveData.yEnd === el.koordinates.yEnd) {collision = true; return;}
+            if(moveData.y < el.koordinates.y && moveData.yEnd === el.koordinates.yEnd) {collision = true;}
         });
 
         if(collision) return false;
@@ -229,13 +230,14 @@ const actions = {
         payload = await dispatch("review",payload);
 
         // Автоперенос при коллизиях
-        let baseY = moveData.y;
-        let incrementor = 0;
-        let iterator = 55;
+        let baseY = moveData.y; // Начальная точка y до переноса
+        let incrementor = 0;    // число приращения y
+        let iterator = 26;      // Ограничитель цикла
 
         while(!payload && iterator){
             iterator --;
             incrementor += 1;
+
             moveData.y = baseY + incrementor;
             let yEnd = moveData.y + duration;
             payload = {x : moveData.x, y: moveData.y,yEnd, id:moveData.id,currentLesson};
