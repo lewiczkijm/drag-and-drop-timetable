@@ -72,7 +72,7 @@
                 function move(e){
                     const coordinates = self.zeroArea(e.clientX,e.clientY);
                     if(!coordinates) return;
-                    if(isMove && x === 0 && y === 0) correctorY = coordinates.y - self.data.koordinates.y;
+                    if(isMove && x === 0 && y === 0) correctorY = coordinates.y - self.data.coordinates.y;
                     if( x && y && (x !== coordinates.x || y !== coordinates.y)) {
                         if(isMove) {
                             coordinates.y -= correctorY;
@@ -115,7 +115,6 @@
 <style scoped>
 .lesson-ticket{
     width: 132px;
-    border-radius: 4px;
     display: grid;
     grid-template-columns: 6px auto;
     grid-template-rows: auto 2px;
@@ -124,12 +123,13 @@
 }
 .holder{
     width: 6px;
-    border-radius: 4px;
+    border-radius: 4px 0 0 4px;
 }
 .container{
     padding: 10px 0 10px 8px;
     font-size: 12px;
     text-align: left;
+    border-radius: 0 4px 4px 0;
 }
 .group-box{
     width: max-content;

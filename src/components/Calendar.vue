@@ -16,9 +16,9 @@
                 :data="lesson"
                 :zeroArea="getZeroKoordinats"
                 :style="{
-                    gridColumn: lesson.koordinates.x,
-                    gridRow: lesson.koordinates.y,
-                    gridRowEnd: lesson.koordinates.yEnd
+                    gridColumn: lesson.coordinates.x,
+                    gridRow: lesson.coordinates.y,
+                    gridRowEnd: lesson.coordinates.yEnd
                 }"
         />
     </div>

@@ -23,7 +23,7 @@ const state = ()=>({
                 color:"#FFEECE",
                 color2:"#FFBC42"
             },
-            koordinates:{},
+            coordinates:{},
         },
         {
             id:24595,
@@ -36,7 +36,7 @@ const state = ()=>({
                 color:"#FFEECE",
                 color2:"#FFBC42"
             },
-            koordinates:{},
+            coordinates:{},
         },
         {
             id:24597,
@@ -49,7 +49,7 @@ const state = ()=>({
                 color:"#FFEECE",
                 color2:"#FFBC42"
             },
-            koordinates:{},
+            coordinates:{},
         },
 
         {
@@ -63,7 +63,7 @@ const state = ()=>({
                 color:"#FFEECE",
                 color2:"#FFBC42"
             },
-            koordinates:{},
+            coordinates:{},
         },
         {
             id:24569,
@@ -76,7 +76,7 @@ const state = ()=>({
                 color:"#CCC6FF",
                 color2:"#A499FF"
             },
-            koordinates:{},
+            coordinates:{},
         },
 
         {
@@ -90,7 +90,7 @@ const state = ()=>({
                 color:"#CCC6FF",
                 color2:"#A499FF"
             },
-            koordinates:{},
+            coordinates:{},
         },
         {
             id:24554,
@@ -103,7 +103,7 @@ const state = ()=>({
                 color:"#CCC6FF",
                 color2:"#A499FF"
             },
-            koordinates:{}
+            coordinates:{}
         },
 
     ],
@@ -135,33 +135,33 @@ const mutations = {
             const x = (new Date(key.date)).getDate() - activeDate.getDate() + 1;
             const y = key.start * 2 - HOUR0 * 2 + 1;
             const yEnd = key.end * 2 - HOUR0 * 2 + 1;
-            key.koordinates = {x:x,y:y,yEnd:yEnd}
+            key.coordinates = {x:x,y:y,yEnd:yEnd}
         });
     },
 
     MOVE_LESSON(state,payload){
         if(!payload) return;
 
-        const x = payload.currentLesson.koordinates.x;
-        payload.currentLesson.koordinates.x = payload.x;
-        payload.currentLesson.koordinates.y = payload.y;
-        payload.currentLesson.koordinates.yEnd = payload.yEnd;
+        const x = payload.currentLesson.coordinates.x;
+        payload.currentLesson.coordinates.x = payload.x;
+        payload.currentLesson.coordinates.y = payload.y;
+        payload.currentLesson.coordinates.yEnd = payload.yEnd;
 
         // Рассчет нового времени
-        let diff = payload.currentLesson.koordinates.x - x;
+        let diff = payload.currentLesson.coordinates.x - x;
         // Нет стандартной функции получения даты вида YYYY-MM-DD
         let date = new Date(new Date(payload.currentLesson.date).getTime() + diff * DAY);
         let dateStr = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
 
-        payload.currentLesson. start = payload.currentLesson.koordinates.y /2+ 0.5 + 4;
-        payload.currentLesson.end = payload.currentLesson.koordinates.yEnd /2+ 0.5 + 4;
+        payload.currentLesson. start = payload.currentLesson.coordinates.y /2+ 0.5 + 4;
+        payload.currentLesson.end = payload.currentLesson.coordinates.yEnd /2+ 0.5 + 4;
         payload.currentLesson.date = dateStr;
 
     },
     RESIZE_LESSON(state,payload){
         if(!payload) return;
-        payload.currentLesson.koordinates.yEnd  =payload.yEnd;
-        payload.currentLesson.end = payload.currentLesson.koordinates.yEnd /2+ 0.5 + 4
+        payload.currentLesson.coordinates.yEnd  =payload.yEnd;
+        payload.currentLesson.end = payload.currentLesson.coordinates.yEnd /2+ 0.5 + 4
     },
     // Это проверочная мутация для тестов - не запускать
     TEST_M(state){
@@ -186,14 +186,14 @@ const actions = {
         state.lessons.forEach(el=>{
             // Отбрасываем случаи, когда процессинг не требуется
             if(el.id === moveData.id) return;
-            if(el.koordinates.x !==moveData.x) return;
+            if(el.coordinates.x !==moveData.x) return;
 
-            if(moveData.y < el.koordinates.yEnd && moveData.y> el.koordinates.y) {collision = true; return;}
-            if(el.koordinates.y < moveData.y &&  el.koordinates.yEnd > moveData.yEnd) {collision = true; return;}
-            if(el.koordinates.y > moveData.y &&  el.koordinates.yEnd < moveData.yEnd) {collision = true; return;}
-            if(moveData.y === el.koordinates.y) {collision = true; return;}
-            if(moveData.yEnd < el.koordinates.yEnd && moveData.y < el.koordinates.y && moveData.yEnd > el.koordinates.y) {collision = true; return;}
-            if(moveData.y < el.koordinates.y && moveData.yEnd === el.koordinates.yEnd) {collision = true;}
+            if(moveData.y < el.coordinates.yEnd && moveData.y> el.coordinates.y) {collision = true; return;}
+            if(el.coordinates.y < moveData.y &&  el.coordinates.yEnd > moveData.yEnd) {collision = true; return;}
+            if(el.coordinates.y > moveData.y &&  el.coordinates.yEnd < moveData.yEnd) {collision = true; return;}
+            if(moveData.y === el.coordinates.y) {collision = true; return;}
+            if(moveData.yEnd < el.coordinates.yEnd && moveData.y < el.coordinates.y && moveData.yEnd > el.coordinates.y) {collision = true; return;}
+            if(moveData.y < el.coordinates.y && moveData.yEnd === el.coordinates.yEnd) {collision = true;}
         });
 
         if(collision) return false;
@@ -206,14 +206,14 @@ const actions = {
         state;
         // Контроль границ
         if(moveData.x > 7 || moveData.yEnd > 25) return false;
-        if(moveData.yEnd - moveData.currentLesson.koordinates.y < 2) return false;
+        if(moveData.yEnd - moveData.currentLesson.coordinates.y < 2) return false;
 
         //Проверка на коллизии
         let collision = false;
         state.lessons.forEach(el=>{
             if(el.id === moveData.id) return;
-            if(el.koordinates.x !==moveData.x) return;
-            if(el.koordinates.y < moveData.yEnd && moveData.currentLesson.koordinates.y < el.koordinates.y) collision = true;
+            if(el.coordinates.x !==moveData.x) return;
+            if(el.coordinates.y < moveData.yEnd && moveData.currentLesson.coordinates.y < el.coordinates.y) collision = true;
         });
 
         if(collision) return false;
@@ -224,7 +224,7 @@ const actions = {
     // Перемещение урока
     async move({commit, state,dispatch},moveData){
         const currentLesson = state.lessons.find(el=>el.id === moveData.id);
-        const duration = currentLesson.koordinates.yEnd - currentLesson.koordinates.y;
+        const duration = currentLesson.coordinates.yEnd - currentLesson.coordinates.y;
         const yEnd = moveData.y + duration;
         let payload = {x : moveData.x, y: moveData.y,yEnd, id:moveData.id,currentLesson};
         payload = await dispatch("review",payload);
@@ -258,10 +258,10 @@ const actions = {
     // Изменение времени урока
     async resize({commit,state,dispatch},moveData){
         const currentLesson = state.lessons.find(el=>el.id === moveData.id);
-        const duration = currentLesson.koordinates.yEnd - moveData.y;
+        const duration = currentLesson.coordinates.yEnd - moveData.y;
         if(duration > 0)
-            moveData.yEnd = currentLesson.koordinates.yEnd  -2;
-        else moveData.yEnd = currentLesson.koordinates.yEnd  +2;
+            moveData.yEnd = currentLesson.coordinates.yEnd  -2;
+        else moveData.yEnd = currentLesson.coordinates.yEnd  +2;
         moveData.currentLesson = currentLesson;
         moveData = await dispatch("reviewResize",moveData);
         commit("RESIZE_LESSON",moveData);

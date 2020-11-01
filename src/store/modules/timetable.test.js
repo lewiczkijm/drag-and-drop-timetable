@@ -67,14 +67,14 @@ test('CREATE_TIMETABLE - right coordinates to grid', () => {
 
 
     timetable.mutations.CREATE_TIMETABLE(state);
-    expect(state.lessons[0].koordinates).toEqual({"x":2,"y":10,"yEnd":12});
+    expect(state.lessons[0].coordinates).toEqual({"x":2,"y":10,"yEnd":12});
 });
 
 //Проверка мутаций движения и ресайза
 test('RESIZE_LESSON', () => {
 
     timetable.mutations.RESIZE_LESSON(state,{currentLesson:state.lessons[2],yEnd:18});
-    expect(state.lessons[2].koordinates).toEqual({"x":3,"y":13,"yEnd":18});
+    expect(state.lessons[2].coordinates).toEqual({"x":3,"y":13,"yEnd":18});
     expect(state.lessons[2].start).toBe(11);
     expect(state.lessons[2].end).toBe(13.5);
 });
@@ -86,7 +86,7 @@ test("MOVE_LESSON",()=>{
         y:11,
         yEnd:16
     });
-    expect(state.lessons[2].koordinates).toEqual({"x":4,"y":11,"yEnd":16});
+    expect(state.lessons[2].coordinates).toEqual({"x":4,"y":11,"yEnd":16});
     expect(state.lessons[2].start).toBe(10);
     expect(state.lessons[2].end).toBe(12.5);
     expect(state.lessons[2].date).toBe("2020-10-22");

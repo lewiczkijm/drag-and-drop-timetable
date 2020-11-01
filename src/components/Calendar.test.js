@@ -11,9 +11,9 @@ const store = new vuex.Store({
         timetable: {
             state:{
                 lessons:[
-                    {id:24589,date:2020-10-20,start:9.5,end:10.5, group:{level:"B2",name:"Kolette",  color:"#FFEECE",color2:"#FFBC42"},koordinates:{"x":2,"y":10,"yEnd":12}},
-                    {id:24575,date:2020-10-20,start:11, end:12,   group:{level:"A2",name:"Liberman", color:"#CCC6FF",color2:"#A499FF"},koordinates:{"x":2,"y":13,"yEnd":15}},
-                    {id:24554,date:2020-10-21,start:11, end:12.5, group:{level:"A2",name:"Liberman", color:"#CCC6FF",color2:"#A499FF"},koordinates:{"x":3,"y":13,"yEnd":16}}
+                    {id:24589,date:2020-10-20,start:9.5,end:10.5, group:{level:"B2",name:"Kolette",  color:"#FFEECE",color2:"#FFBC42"},coordinates:{"x":2,"y":10,"yEnd":12}},
+                    {id:24575,date:2020-10-20,start:11, end:12,   group:{level:"A2",name:"Liberman", color:"#CCC6FF",color2:"#A499FF"},coordinates:{"x":2,"y":13,"yEnd":15}},
+                    {id:24554,date:2020-10-21,start:11, end:12.5, group:{level:"A2",name:"Liberman", color:"#CCC6FF",color2:"#A499FF"},coordinates:{"x":3,"y":13,"yEnd":16}}
                     ],
                 dates:["Mon, 19","Tue, 20","Wed, 21","Thu, 22","Fri, 23","Sat, 24","Sun, 25"]
             }

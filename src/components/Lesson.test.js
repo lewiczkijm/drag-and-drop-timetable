@@ -6,7 +6,7 @@ import Lesson from './Lesson'
 
 const data = {"id":24589,"date":"2020-10-20","start":9.5,"end":10.5,
     "group":{"level":"B2","name":"Liberman","color":"#FFEECE","color2":"#FFBC42"},
-    "koordinates":{"x":2,"y":10,"yEnd":12}
+    "coordinates":{"x":2,"y":10,"yEnd":12}
 };
 
 
@@ -35,7 +35,7 @@ test('First correct test', () => {
 test('Simple text', () => {
     const data = {"id":24589,"date":"2020-10-20","start":9.5,"end":10.5,
         "group":{"level":"B2","name":"Kolette","color":"#FFEECE","color2":"#FFBC42"},
-        "koordinates":{"x":2,"y":10,"yEnd":12}
+        "coordinates":{"x":2,"y":10,"yEnd":12}
     };
     const wrapper = mount(Lesson,{propsData:{data}});
     expect(wrapper.text()).toContain("9:30");
